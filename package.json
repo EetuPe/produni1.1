@@ -6,8 +6,10 @@
     "build": "next build",
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "lint": "next lint",
-    "start": "next start"
+    "lint": "eslint . --ext .ts",
+    "start": "next start",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts||tsx|json)\"",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
@@ -17,11 +19,16 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "@upstash/ratelimit": "^0.4.1",
+    "@upstash/redis": "^1.20.1",
+    "dayjs": "^1.11.7",
     "next": "^13.2.1",
     "next-auth": "^4.19.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
     "superjson": "1.9.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "zod": "^3.20.6"
   },
   "devDependencies": {
@@ -35,6 +42,8 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.2.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.14",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
