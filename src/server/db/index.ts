@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/singlestore';
 import { createPool, type Pool } from 'mysql2/promise';
 
-import { env } from '~/env';
+import { env } from '~/env.mjs';
 import * as schema from './schema';
 
 /**
