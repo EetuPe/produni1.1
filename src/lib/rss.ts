@@ -1,19 +1,29 @@
-export type Feed = {
-  slug: string;
-  title: string;
-  url: string;
-};
+import Parser from 'rss-parser';
+import type { Output } from 'rss-parser';
 
-export const FEEDS: Feed[] = [
+export const FEEDS = [
   {
-    slug: 'ravintola-reaktori',
-    title: 'Ravintola Reaktori',
-    url: 'https://example.com/feed1.rss'
+    slug: 'hervanta-hertsi',
+    title: 'Hertsi',
+    url: 'https://www.sodexo.fi/ruokalistat/rss/weekly_rss/111/fi'
   },
   {
-    slug: 'juvenes',
-    title: 'Juvenes',
-    url: 'https://example.com/feed2.rss'
+    slug: 'hervanta-reaktori',
+    title: 'Reaktori',
+    url: 'https://www.compass-group.fi/menuapi/feed/rss/current-week?costNumber=0812&language=fi'
   }
-  // add more feeds here
 ];
+
+export type Feed = (typeof FEEDS)[number];
+
+export type CustomItem = {
+  title: string;
+  contentSnippet?: string | null;
+  guid?: string;
+};
+
+const parser = new Parser<Record<string, never>, CustomItem>();
+
+export async function getFeed(feedUrl: string): Promise<Output<CustomItem>> {
+  return parser.parseURL(feedUrl);
+}

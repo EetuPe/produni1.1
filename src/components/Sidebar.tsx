@@ -8,14 +8,16 @@ import {
   EnvelopeIcon,
   MegaphoneIcon,
   AdjustmentsHorizontalIcon,
-  UserMinusIcon,
   ClipboardDocumentListIcon,
   Squares2X2Icon
 } from '@heroicons/react/24/outline';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/router';
 
 function Sidebar() {
+  const router = useRouter();
+
   const { data: session } = useSession();
   console.log(session);
   return (
@@ -67,7 +69,11 @@ function Sidebar() {
           <ClipboardDocumentListIcon className="h-5 w-5" />
           <p>Exam</p>
         </Button>
-        <Button variant="ghost" className="w-full justify-start">
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={() => void router.push('/lunch')}
+        >
           <RssIcon className="h-5 w-5" />
           <p>Lunch</p>
         </Button>
