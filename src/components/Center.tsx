@@ -31,7 +31,7 @@ function Center() {
   }, []);
 
   return (
-    <div className="grow">
+    <div>
       <header className="absolute right-8 top-5">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
