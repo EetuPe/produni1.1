@@ -1,39 +1,38 @@
-import {
-  getProviders,
-  signIn,
-  type ClientSafeProvider,
-  type LiteralUnion
-} from 'next-auth/react';
-import type { BuiltInProviderType } from 'next-auth/providers/index';
+import { type NextPage } from 'next';
+import Head from 'next/head';
+import { signIn, useSession } from 'next-auth/react';
 
-type Props = {
-  providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider>;
-};
-
-function Login({ providers }: Props) {
+const Login: NextPage = () => {
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black">
-      {Object.values(providers).map((provider) => (
-        <div key={provider.name}>
-          <button
-            className="rounded-full bg-[#18D860] p-5 text-white"
-            onClick={() => void signIn(provider.id, { callbackUrl: '/' })}
-          >
-            Login with {provider.name}
-          </button>
+    <>
+      <Head>
+        <title>Produni - Login</title>
+        <meta name="description" content="Sign in to Produni" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className="flex min-h-screen flex-col items-center justify-center bg-[#91C788]">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+            Prod<span className="text-[#DDFFBC]">U</span>ni
+          </h1>
+          <div className="flex flex-col items-center gap-2">
+            <SignInButton />
+          </div>
         </div>
-      ))}
-    </div>
+      </main>
+    </>
   );
-}
+};
 
 export default Login;
 
-export async function getServerSideProps() {
-  const providers = await getProviders();
-  return {
-    props: {
-      providers
-    }
-  };
-}
+const SignInButton: React.FC = () => {
+  return (
+    <button
+      className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+      onClick={() => void signIn()}
+    >
+      Sign in
+    </button>
+  );
+};
