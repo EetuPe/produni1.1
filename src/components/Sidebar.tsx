@@ -8,7 +8,6 @@ import {
   EnvelopeIcon,
   MegaphoneIcon,
   AdjustmentsHorizontalIcon,
-  UserMinusIcon,
   ClipboardDocumentListIcon,
   Squares2X2Icon
 } from '@heroicons/react/24/outline';

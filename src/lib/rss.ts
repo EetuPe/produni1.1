@@ -22,7 +22,7 @@ export type CustomItem = {
   guid?: string;
 };
 
-const parser: Parser<Record<string, never>, CustomItem> = new Parser();
+const parser = new Parser<Record<string, never>, CustomItem>();
 
 export async function getFeed(feedUrl: string): Promise<Output<CustomItem>> {
   return parser.parseURL(feedUrl);
