@@ -1,20 +1,36 @@
-import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import { type NextRequest } from 'next/server';
 
-export async function middleware(req: NextRequest) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname.includes('/api/auth') || token) {
+  if (pathname.startsWith('/api/auth')) {
     return NextResponse.next();
   }
 
-  if (!token && pathname !== '/login') {
+  const sessionToken =
+    req.cookies.get('next-auth.session-token') ??
+    req.cookies.get('__Secure-next-auth.session-token');
+
+  if (!sessionToken && pathname !== '/login') {
     return NextResponse.redirect(new URL('/login', req.url));
   }
+
+  if (sessionToken && pathname === '/login') {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|login).*)']
+  matcher: [
+    {
+      source: '/((?!_next/static|_next/image|favicon.ico).*)',
+      missing: [
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' }
+      ]
+    }
+  ]
 };
